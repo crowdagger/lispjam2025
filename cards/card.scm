@@ -7,6 +7,7 @@
         card-value
         card-name)
 (import (srfi srfi-9)
+        (srfi srfi-9 gnu)
         (ice-9 format)
         (ice-9 optargs))
 
@@ -60,3 +61,30 @@
            (card-satisfies-color? card (cdr color)))))
 
 
+;; Redefines how cards are displayed
+(define (color->string color)
+  "Transform a color as a quoted name to some string"
+  (case color
+    ([heart] "♥")
+    ([spade] "♠")
+    ([diamond] "♦")
+    ([club] "♣")
+    (else (error "Invalid color" color))))
+
+(define (format-card-color color)
+  "Transform a list of colors to a concise string"
+  (if (null? color)
+      ""
+      (format #f "~a~a"
+              (color->string (car color))
+              (format-card-color (cdr color)))))
+
+(set-record-type-printer! <card>
+                     (lambda (record port)
+                       (format port "~a~a"
+                               (format-card-color (card-color record))
+                               (card-value record))))
+
+
+(define c (make-card '(heart club) 3))
+(display c)
