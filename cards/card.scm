@@ -1,9 +1,12 @@
 (define-module (cards card))
 (export <card>
+        make-card
+        card?
         card-satisfies?
         card-color
-        card-value)
-(import (oop goops)
+        card-value
+        card-name)
+(import (srfi srfi-9)
         (ice-9 format)
         (ice-9 optargs))
 
@@ -16,29 +19,23 @@
 ;; * yellow/diamond: defense
 ;;
 ;; A card might have more than one color
-(define-class <card> ()
-  (color #:init-value '()
-         #:init-keyword #:color
-         #:getter card-color)
-  (value #:init-value 0
-         #:init-keyword #:value
-         #:getter card-value)
-  (name #:init-value #f
-        #:getter card-name
-        #:init-keywod #:name))
+(define-record-type <card>
+  (make-card% color value name)
+  card?
+  (color card-color)
+  (value card-value)
+  (name card-name))
 
 
-;; Method used wher (make <card>) is called
-(define-method (initialize (c <card>) initargs)
-  (next-method)
-
+;; Method used to create a card
+(define* (make-card color value #:optional (name #f))
   ;; Set default name if name is not set
-  (unless (slot-ref c 'name)
-    (slot-set! c 'name
-               (format #f "~a of ~a"
-                       (slot-ref c 'value)
-                       (slot-ref c 'color)))))
-
+  (let ([name (if name
+                  name
+                  (format #f "~a of ~a"
+                          color
+                          value))])
+    (make-card% color value name)))
 
 (define (card-satisfies? card color value)
   "Returns #t if a card satifies both color and value conditions, #f else
@@ -47,10 +44,10 @@
 * value must be a number. All cards satisfy a value of 0
 
 "
-  (unless (list? color)
-    (error "Color must be a list" color))
-  (unless (number? value)
-    (error "Value must be a number" value))
+  (unless (and (card? card)
+               (list? color)
+               (number? value))
+    (error "Invalid arguments to card-satisfies?, expected card color value" card color value))
   (and
    (card-satisfies-color? card color)
    (>= (card-value card) value)))
@@ -63,4 +60,3 @@
            (card-satisfies-color? card (cdr color)))))
 
 
-(define c (make <card> #:color '(heart) #:value 2))

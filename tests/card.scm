@@ -1,10 +1,9 @@
 (import (srfi srfi-64)
-        (oop goops)
         (cards card))
 
 (test-begin "card")
 (test-group "basis"
-  (define c (make <card> #:color '(heart) #:value 2))
+  (define c (make-card '(heart) 2))
   (test-eq #t (card-satisfies? c '() 0))
   (test-eq #t (card-satisfies? c '() 2))
   (test-eq #f (card-satisfies? c '() 3))
