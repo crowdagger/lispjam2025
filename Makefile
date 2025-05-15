@@ -1,7 +1,7 @@
 GUILE=guile -L .
 
-example:
-	$(GUILE) example.scm
+run:
+	$(GUILE) main.scm
 
 test:
 	$(GUILE) tests/tests.scm
