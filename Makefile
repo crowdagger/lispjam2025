@@ -5,3 +5,6 @@ run:
 
 test:
 	$(GUILE) tests/tests.scm
+
+clean:
+	rm *.wasm
