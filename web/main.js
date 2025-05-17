@@ -3,7 +3,8 @@ window.addEventListener("load", function() {
     user_imports: {
       document: {
         body() { return document.body; },
-        createTextNode: Document.prototype.createTextNode.bind(document)
+          createTextNode: Document.prototype.createTextNode.bind(document),
+          getElementById: (id) => document.getElementById(id)
       },
       element: {
           appendChild(parent, child) { return parent.appendChild(child); },

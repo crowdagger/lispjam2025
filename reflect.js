@@ -211,7 +211,7 @@ class Scheme {
         this.#abi = abi;
     }
 
-    static async reflect(abi, {reflect_wasm_dir = ''}) {
+    static async reflect(abi, {reflect_wasm_dir = '.'}) {
         let debug = {
             debug_str(x) { console.log(`reflect debug: ${x}`); },
             debug_str_i32(x, y) { console.log(`reflect debug: ${x}: ${y}`); },
@@ -241,10 +241,22 @@ class Scheme {
             },
         });
         mod.set_ffi_handler({
+            is_extern_func: (x) => typeof(x) === "function",
+            call_extern: (f, args) => {
+                const jsArgs = [];
+                for(args = this.#to_js(args); !(args instanceof Null); args = this.cdr(args)) {
+                    jsArgs.push(this.car(args));
+                }
+                let result = f(...jsArgs);
+                if(result === undefined || result === null) {
+                    result = new Unspecified();
+                }
+                return this.#to_scm(result);
+            },
             procedure_to_extern: (obj) => {
                 const proc = this.#to_js(obj);
                 return (...args) => {
-                    return proc.call(...args);
+                    return proc.call(...args)[0];
                 };
             }
         });
@@ -554,6 +566,20 @@ class SchemeModule {
         bignum_logand(a, b) { return BigInt(a) & BigInt(b); },
         bignum_logior(a, b) { return BigInt(a) | BigInt(b); },
         bignum_logxor(a, b) { return BigInt(a) ^ BigInt(b); },
+        bignum_logcount(a) {
+            let c = 0;
+            // Iterate over 32-bit chunks of the BigInt until all bits
+            // are consumed.
+            for(let b = a; b > 0n; b = b >> 32n) {
+                let v = Number(BigInt.asUintN(32, b));
+                // Bit shift magic from:
+                // https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+                v = v - ((v >> 1) & 0x55555555);
+                v = (v & 0x33333333) + ((v >> 2) & 0x33333333);
+                c += ((v + (v >> 4) & 0xF0F0F0F) * 0x1010101) >> 24;
+            }
+            return c;
+        },
 
         bignum_lt(a, b) { return a < b; },
         bignum_le(a, b) { return a <= b; },
@@ -594,6 +620,35 @@ class SchemeModule {
         jiffies_per_second() { return 1000000; },
         current_jiffy() { return performance.now() * 1000; },
         current_second() { return Date.now() / 1000; },
+        make_date(year, month, day, hour, min, sec, ms) {
+            return new Date(year, month, day, hour, min, sec, ms);
+        },
+        ms_utc_to_date(t) { return new Date(t); },
+        date_year(d) { return d.getFullYear(); },
+        date_month(d) { return d.getMonth(); },
+        date_day(d) { return d.getDate(); },
+        date_weekday(d) { return d.getDay(); },
+        date_hour(d) { return d.getHours(); },
+        date_min(d) { return d.getMinutes(); },
+        date_sec(d) { return d.getSeconds(); },
+        date_ms(d) { return d.getMilliseconds(); },
+        date_timezone_offset(d) { return d.getTimezoneOffset(); },
+        date_locale(d) {
+            return new Intl.DateTimeFormat(undefined, {
+                dateStyle: "long",
+                timeStyle: "long"
+            }).format(d);
+        },
+        date_locale_date(d) {
+            return new Intl.DateTimeFormat(undefined, {
+                dateStyle: "long"
+            }).format(d);
+        },
+        date_locale_time(d) {
+            return new Intl.DateTimeFormat(undefined, {
+                timeStyle: "long"
+            }).format(d);
+        },
 
         async_invoke,
         async_invoke_later,
@@ -869,8 +924,14 @@ class SchemeModule {
             debug_str_scm(x, y) { mod.#debug_handler.debug_str_scm(x, y); },
             code_name(code) { return SchemeModule.#code_name(code); },
             code_source(code) { return SchemeModule.#code_source(code); },
-        }
+        };
         let ffi = {
+            is_extern_func(x) {
+                return mod.#ffi_handler.is_extern_func(x);
+            },
+            call_extern(f, args) {
+                return mod.#ffi_handler.call_extern(f, args);
+            },
             procedure_to_extern(proc) {
                 return mod.#ffi_handler.procedure_to_extern(proc);
             }

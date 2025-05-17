@@ -1,6 +1,7 @@
 (define-module (web dom)
   #:use-module (hoot ffi)
   #:export (document-body
+            get-element-by-id
         make-text-node
         set-html!
         append-html!
@@ -9,6 +10,10 @@
 (define-foreign document-body
   "document" "body"
   -> (ref null extern))
+
+(define-foreign get-element-by-id
+  "document" "getElementById"
+  (ref string) -> (ref null extern))
 
 (define-foreign make-text-node
   "document" "createTextNode"

@@ -4,8 +4,10 @@
              (sif scene))
 
 
-(message "Foo!")
-(message "Bar")
-(append-child! (document-body) (make-text-node "Hello, world!"))
+(define story (get-element-by-id "story"))
 
-(append-html! (document-body) (format #f "<b>POUET</b> ~a" f))
+;(message "Foo!")
+;(message "Bar")
+(append-child! story (make-text-node "Hello, world!"))
+
+(append-html! story (format #f "<b>POUET</b> ~a" f))

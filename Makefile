@@ -1,7 +1,7 @@
 GUILE=guile -L . -L vm
 
 main.wasm: main-web.scm
-	guild compile-wasm -L . -L hoot -o main.wasm main-web.scm
+	guild compile-wasm -L . -L hoot --bundle -o main.wasm main-web.scm
 
 run:
 	$(GUILE) main.scm
