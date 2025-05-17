@@ -1,6 +1,6 @@
 (import (cards card)
         (sif ui)
-        (sif character-data)
+        (sif character)
         (ice-9 format))
 
 (define c (make-card '(heart) 2))
@@ -8,6 +8,6 @@
 (display c)
 (newline)
 
-(define toto (make-character-data "Toto"))
+(define toto (make-character "Toto"))
 
-(message "Plop" toto)
+(toto "Plop")
