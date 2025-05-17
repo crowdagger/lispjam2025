@@ -3,6 +3,7 @@
   #:export (document-body
         make-text-node
         set-html!
+        append-html!
         append-child!))
 
 (define-foreign document-body
@@ -15,6 +16,10 @@
 
 (define-foreign set-html!
   "element" "setHtml"
+  (ref null extern) (ref string) -> (ref null extern))
+
+(define-foreign append-html!
+  "element" "appendHtml"
   (ref null extern) (ref string) -> (ref null extern))
 
 (define-foreign append-child!

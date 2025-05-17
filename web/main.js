@@ -7,7 +7,8 @@ window.addEventListener("load", function() {
       },
       element: {
           appendChild(parent, child) { return parent.appendChild(child); },
-          setHtml(elem, html) { elem.innerHTML = html; }
+          setHtml(elem, html) { elem.innerHTML = html; },
+          appendHtml(elem, html) { elem.innerHTML += html; }
       }
     }
   });
