@@ -1,15 +1,13 @@
-(define-module (cards card))
-(export <card>
+(define-module (cards card)
+  #:use-module (srfi srfi-9)
+  #:export (<card>
         make-card
         card?
         card-satisfies?
         card-color
         card-value
         card-name)
-(import (srfi srfi-9)
-        (srfi srfi-9 gnu)
-        (ice-9 format)
-        (ice-9 optargs))
+  )
 
 ;; Basic card
 ;;
@@ -79,12 +77,12 @@
               (color->string (car color))
               (format-card-color (cdr color)))))
 
-(set-record-type-printer! <card>
-                     (lambda (record port)
-                       (format port "~a~a"
-                               (format-card-color (card-color record))
-                               (card-value record))))
+;; (set-record-type-printer! <card>
+;;                      (lambda (record port)
+;;                        (format port "~a~a"
+;;                                (format-card-color (card-color record))
+;;                                (card-value record))))
 
 
 (define c (make-card '(heart club) 3))
-(display c)
+;(display c)

@@ -1,7 +1,7 @@
-(define-module (if scene))
-
-(export define-scene
-        call-scene)
+(define-module (sif scene)
+  #:export (f            
+            define-scene
+            call-scene))
 
 ;; define-scene macro
 ;;
@@ -53,13 +53,14 @@ Returns either a new state, or #f is story has ended."
     (if ret
         (+ 1 state)
         (begin
-          (display "Story ended\n")
+          ;(display "Story ended\n")
           #f))))
 
+(cond-expand
+ (hoot
+  (define f 42))
+ (else
+  (define f 0)))
 
-(define-scene pouet
-  (display "Foo\n")
-  (display "Bar\n")
-  (display "Baz\n"))
 
-(call-scene pouet (call-scene pouet 0))
+

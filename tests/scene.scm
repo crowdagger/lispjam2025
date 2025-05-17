@@ -1,5 +1,5 @@
 (import (srfi srfi-64)
-        (if scene))
+        (sif scene))
 
 (test-begin "scene")
 (test-group "macro/call"
