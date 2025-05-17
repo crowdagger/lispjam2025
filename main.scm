@@ -1,5 +1,5 @@
 (import (cards card)
-        (ui ui)
+        (sif ui)
         (ice-9 format))
 
 (define c (make-card '(heart) 2))

@@ -1,4 +1,4 @@
-(define-module (ui ui)
+(define-module (sif ui)
   #:export (message))
 
 (define (message msg)
