@@ -1,4 +1,5 @@
 (define-module (sif ui)
+  #:use-module (sif character-data)
   #:use-module (web dom)
   #:export (message
             raw-message))
@@ -14,7 +15,14 @@
   ;; TODO: escape HTML
   (raw-message (format #f "<p>~a~a</p>"
                        (if who
-                           "TODO: "
+                           (format #f "<span class = 'character-name' ~a>
+~a
+</span>: "
+                                   (if (character-color who)
+                                       (format #f "style = \"color: ~a;\" "
+                                               (character-color who))
+                                       "")
+                                   (character-name who))
                            "")
                        msg)))
   

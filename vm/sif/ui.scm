@@ -1,4 +1,5 @@
 (define-module (sif ui)
+  #:use-module (sif character-data)
   #:export (message
             raw-message))
 
@@ -12,6 +13,7 @@
   ;; TODO: wrap lines, ANSI color, stuff
   (raw-message (format #f "~a~a"
                        (if who
-                           "TODO: "
+                           (format #f "~a: "
+                                   (character-name who))
                            "")
                        msg)))
