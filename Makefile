@@ -1,6 +1,10 @@
 GUILE=guile -L . -L vm
 
-main.wasm: main-web.scm
+SRC = \
+  hoot/sif/ui.scm \
+  sif/scene.scm 
+
+main.wasm: main-web.scm $(SRC)
 	guild compile-wasm -L . -L hoot --bundle -o main.wasm main-web.scm
 
 run:
