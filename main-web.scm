@@ -2,20 +2,10 @@
              (web dom)
              (sif ui)
              (sif main)
-             (sif character)
-             (sif scene))
+             (script start))
 
 
-(define story (get-element-by-id "story"))
-(define toto (make-character "Toto" "#FF0000"))
-
-(define-scene scene-0
-  (message "Foo!")
-  (toto "Bar!")
-  (message "Plop")
-  (toto "Coin"))
-
-(sif-init scene-0)
+(sif-init start-scene)
 (sif-main)
 ;(append-child! story (make-text-node "Hello, world!"))
 
