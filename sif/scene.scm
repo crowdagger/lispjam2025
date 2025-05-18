@@ -1,12 +1,11 @@
 (define-module (sif scene)
   #:use-module (ice-9 match)
   #:use-module (sif ui)
+  #:use-module (sif ui-shared)
   #:use-module (sif state)
   #:export (menu
             lambdaify
-            define-scene
-            call-scene
-            scene-handler!))
+            define-scene))
 
 ;; define-scene macro
 ;;
@@ -76,31 +75,3 @@
      (%outer name () (exp ... 'end)))))
 
 
-(define* (call-scene scene state #:optional (input #f))
-  "Call the appropriate passage of a scene according to the current state
-
-Returns either a new state, or #f is story has ended."
-  (let ([ret ((vector-ref scene state) input)])
-    (if ret
-        (+ 1 state)
-        (begin
-          ;(display "Story ended\n")
-          #f))))
-
-  
-(define* (scene-handler! state #:optional (input #f))
-  "Call the appropriate passage of a scene according to the current state
-
-This function modifies the state"
-  (let* ([scene (state-scene state)]
-         [index (state-index state)]
-         [ret ((vector-ref scene index) input)])
-    (match ret
-      ['continue
-       (state-set-index! state (+ 1 index))
-       ret]
-      ['repeat
-       ret]
-      ['end
-       ;; Todo
-       #f])))

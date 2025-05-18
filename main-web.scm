@@ -2,8 +2,8 @@
              (web dom)
              (sif ui)
              (sif main)
+             (sif scene)
              (script start))
-
 
 (sif-init start-scene)
 (sif-main)
