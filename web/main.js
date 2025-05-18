@@ -9,6 +9,7 @@ window.addEventListener("load", function() {
       element: {
           appendChild(parent, child) { return parent.appendChild(child); },
           setHtml(elem, html) { elem.innerHTML = html; },
+          addEventListener(elem, name, f) { elem.addEventListener(name, f); },
           appendHtml(elem, html) { elem.innerHTML += html; }
       }
     }

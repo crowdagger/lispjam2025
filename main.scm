@@ -10,4 +10,6 @@
 
 (define toto (make-character "Toto"))
 
+(message "Test")
 (toto "Plop")
+(toto "Foo?")

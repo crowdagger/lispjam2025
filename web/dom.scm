@@ -2,10 +2,15 @@
   #:use-module (hoot ffi)
   #:export (document-body
             get-element-by-id
-        make-text-node
-        set-html!
-        append-html!
-        append-child!))
+            add-event-listener!
+            make-text-node
+            set-html!
+            append-html!
+            append-child!))
+
+(define-foreign add-event-listener!
+    "element" "addEventListener"
+    (ref null extern) (ref string) (ref null extern) -> none)
 
 (define-foreign document-body
   "document" "body"

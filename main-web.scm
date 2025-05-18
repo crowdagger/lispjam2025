@@ -10,6 +10,8 @@
 
 (message "Foo!")
 (toto "Bar!")
+(message "Plop")
+(toto "Coin")
 ;(append-child! story (make-text-node "Hello, world!"))
 
 ;(append-html! story (format #f "<b>POUET</b> ~a" f))
