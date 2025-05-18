@@ -1,5 +1,6 @@
 (define-module (sif ui)
   #:use-module (sif character-data)
+  #:use-module (sif scene)
   #:use-module (web dom)
   #:use-module (scheme write)
   #:use-module (hoot ffi)

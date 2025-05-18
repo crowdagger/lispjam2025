@@ -1,14 +1,10 @@
 (import (cards card)
         (sif ui)
+        (sif main)
         (sif scene)
         (sif state)
         (sif character)
         (ice-9 format))
-
-(define c (make-card '(heart) 2))
-
-(display c)
-(newline)
 
 (define toto (make-character "Toto"))
 
@@ -20,9 +16,13 @@
 (display scene-0)
 (newline)
 
-(define *state* (init-state scene-0))
+(display *state*)
+(newline)
+(sif-init scene-0)
+(display *state*)
+(newline)
 
-(while (scene-handler! *state*)
+(while (sif-main)
   (display *state*)
   (newline))
 
