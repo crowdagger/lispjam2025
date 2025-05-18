@@ -1,5 +1,6 @@
 (define-module (sif ui)
   #:use-module (sif character-data)
+  #:use-module (ice-9 readline)
   #:export (message
             raw-message))
 
@@ -9,11 +10,18 @@
   (newline))
 
 (define* (message msg #:optional (who #f))
-  "Adds HTML formatting and call raw-message"
+  "Wrapper around raw-message"
   ;; TODO: wrap lines, ANSI color, stuff
   (raw-message (format #f "~a~a"
                        (if who
                            (format #f "~a: "
                                    (character-name who))
                            "")
-                       msg)))
+                       msg))
+  (post-message))
+
+;; Wait for user input
+(define (post-message)
+  (display "...")
+  (newline)
+  (readline))

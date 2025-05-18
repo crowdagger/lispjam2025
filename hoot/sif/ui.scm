@@ -24,5 +24,11 @@
                                        "")
                                    (character-name who))
                            "")
-                       msg)))
-  
+                       msg))
+  (post-message))
+
+
+;; Adds a link to display next message
+(define (post-message)
+  (set-html! (get-element-by-id "user-input")
+             "<p><a>Next</a></p>"))

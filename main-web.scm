@@ -10,6 +10,6 @@
 
 (message "Foo!")
 (toto "Bar!")
-(append-child! story (make-text-node "Hello, world!"))
+;(append-child! story (make-text-node "Hello, world!"))
 
-(append-html! story (format #f "<b>POUET</b> ~a" f))
+;(append-html! story (format #f "<b>POUET</b> ~a" f))

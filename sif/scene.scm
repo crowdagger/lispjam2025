@@ -56,11 +56,4 @@ Returns either a new state, or #f is story has ended."
           ;(display "Story ended\n")
           #f))))
 
-(cond-expand
- (hoot
-  (define f 42))
- (else
-  (define f 0)))
-
-
-
+  
