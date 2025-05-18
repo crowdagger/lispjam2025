@@ -1,7 +1,9 @@
 (define-module (sif scene)
-  #:export (f            
-            define-scene
-            call-scene))
+  #:use-module (ice-9 match)
+  #:use-module (sif state)
+  #:export (define-scene
+            call-scene
+            scene-handler!))
 
 ;; define-scene macro
 ;;
@@ -42,7 +44,7 @@
 (define-syntax define-scene
   (syntax-rules ()
     ((_ name exp ...)
-     (%outer name () (exp ... #f)))))
+     (%outer name () (exp ... 'end)))))
 
 
 (define* (call-scene scene state #:optional (input #f))
@@ -57,3 +59,17 @@ Returns either a new state, or #f is story has ended."
           #f))))
 
   
+(define* (scene-handler! state #:optional (input #f))
+  "Call the appropriate passage of a scene according to the current state
+
+This function modifies the state"
+  (let* ([scene (state-scene state)]
+         [index (state-index state)]
+         [ret ((vector-ref scene index) input)])
+    (match ret
+      ['continue
+       (state-set-index! state (+ 1 index))
+       state]
+      ['end
+       ;; Todo
+       #f])))

@@ -27,7 +27,8 @@
                                    (character-name who))
                            "")
                        msg))
-  (post-message who))
+  (post-message)
+  'continue)
 
 
 ;; Adds a link to display next message

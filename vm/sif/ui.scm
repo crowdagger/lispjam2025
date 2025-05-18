@@ -18,7 +18,8 @@
                                    (character-name who))
                            "")
                        msg))
-  (post-message))
+  (post-message)
+  'continue)
 
 ;; Wait for user input
 (define (post-message)
