@@ -3,8 +3,7 @@
   #:use-module (sif ui)
   #:use-module (sif ui-shared)
   #:use-module (sif state)
-  #:export (menu
-            jump
+  #:export (jump
             lambdaify
             define-scene))
 
@@ -31,9 +30,6 @@
 ;;                       ((equal input 1) (display "Oh :("))
 ;;    (else (invalid-input))))))
 
-(define-syntax menu (syntax-rules ()))
-
-
 (define-syntax lambdaify
   (syntax-rules ()
     ((_ (done ...) ())
@@ -57,7 +53,7 @@
 ;; (lambda (input) (raw menu "Choice?" (lambdaify some_choices) input)
 (define-syntax helper
   (syntax-rules ()
-    ((_ (menu msg opt)) (lambda* (#:optional (input #f))
+    ((_ (#:menu msg opt)) (lambda* (#:optional (input #f))
                           (raw-menu msg (lambdaify () opt) input)))
     ((_ exp) (lambda* (#:optional (input #f)) exp))))
 

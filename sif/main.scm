@@ -26,7 +26,10 @@ This function modifies the state"
        ret]
       ['end
        ;; Todo
-       #f])))
+       #f]
+      [else
+       (state-set-index! state (+ 1 index))
+       (scene-handler! state)])))
 
 
 (define (sif-init scene)
