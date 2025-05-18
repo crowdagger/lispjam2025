@@ -5,6 +5,7 @@
   #:use-module (scheme write)
   #:use-module (hoot ffi)
   #:export (message
+            clear-screen
             raw-message
             user-choices))
 
@@ -45,6 +46,11 @@
                                      "")])
                           (sif-main)
                           ret)))))
+
+(define (clear-screen)
+  "Clear the text region"
+  (set-html! (get-element-by-id "story")
+             ""))
 
 (define (user-choices choices)
   (let ([user-input (get-element-by-id "user-input")])

@@ -19,6 +19,7 @@
 
 
 (define-scene sleep-scene
+  (clear-screen)
   (naomi "Oh, well")
   (message "The young woman closed her eyes again and used a pillow to hide from the light.")
   (set! *time* (+ 4 *time*))
@@ -28,5 +29,19 @@
   (jump awake-scene))
 
 (define-scene awake-scene
+  (clear-screen)
   (naomi "Let's get moving")
-  (message "She got up."))
+  (message "She got up.")
+  (jump end-scene))
+
+
+(define-scene end-scene
+  (clear-screen)
+  (message "THE END")
+  (clear-screen)
+  (lizzie "Thanks for playing!")
+  (lizzie "I offer my apologies for the lack of actual game content")
+  (lizzie "However, I still wanted to submit something to partcipate")
+  (lizzie "This was a nice experience, kudos to David Thompson and Technomancy for organizing this jam 💜")
+  (clear-screen)
+  (message "THE END (for real)"))

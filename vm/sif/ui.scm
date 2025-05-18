@@ -2,6 +2,7 @@
   #:use-module (sif character-data)
   #:use-module (ice-9 readline)
   #:export (message
+            clear-screen
             raw-message
             user-choices))
 
@@ -24,8 +25,11 @@
 
 ;; Wait for user input
 (define (post-message)
-  (display "...")
+;  (display "...")
   (newline))
+
+(define (clear-screen)
+  (display "TODO"))
 
 
 (define (user-choices choices)
