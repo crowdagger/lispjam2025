@@ -1,6 +1,6 @@
 (define-module (sif ui)
   #:use-module (sif character-data)
-  #:use-module (sif scene)
+  #:use-module (sif main)
   #:use-module (web dom)
   #:use-module (scheme write)
   #:use-module (hoot ffi)
@@ -40,7 +40,8 @@
                        "click"
                        (procedure->external
                         (lambda (event)
-                          (display "???")
-                          (set-html! (get-element-by-id "next-link")
-                                     ""))))
+                          (let ([ret (set-html! (get-element-by-id "next-link")
+                                     "")])
+                          (sif-main)
+                          ret))))
   )
