@@ -3,6 +3,7 @@
   #:use-module (sif ui)
   #:use-module (sif state)
   #:export (menu
+            lambdaify
             define-scene
             call-scene
             scene-handler!))
@@ -32,10 +33,32 @@
 
 (define-syntax menu (syntax-rules ()))
 
+
+(define-syntax lambdaify
+  (syntax-rules ()
+    ((_ (done ...) ())
+     (list done ...))
+    ((_ (done ...) ((todo-msg todo-exp) todo* ...))
+     (lambdaify (done ... (list todo-msg (lambda* (#:optional (input #f)) todo-exp)) ) (todo* ...)))
+;    ((_ (done ...) (todo ...))
+;     (syntax-error "Invalid syntax for menu")))
+    ))
+        
+
+;; Transform a line such as
+;; (message "Foo")
+;;
+;; to
+;; (lambda () (message "Foo"))
+;;
+;; and
+;; (menu "Choice?" some_choices)
+;; to
+;; (lambda (input) (raw menu "Choice?" (lambdaify some_choices) input)
 (define-syntax helper
   (syntax-rules ()
     ((_ (menu msg opt)) (lambda* (#:optional (input #f))
-                          (raw-menu msg opt input)))
+                          (raw-menu msg (lambdaify () opt) input)))
     ((_ exp) (lambda* (#:optional (input #f)) exp))))
 
 (define-syntax %outer

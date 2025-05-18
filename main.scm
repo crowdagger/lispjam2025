@@ -2,12 +2,14 @@
         (ice-9 readline)
         (ice-9 format)
         (ice-9 match)
+        (ice-9 pretty-print)
+        (script characters)
+        (sif scene)
+        (language tree-il)
         (script start))
 
 (sif-init start-scene)
 
-(display (vector-ref start-scene 0))
-(newline)
 
 (display "Press enter to start")
 (let main-loop ([ret 'continue])

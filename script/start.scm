@@ -11,8 +11,8 @@
   (message "Or at least, it was pretty early according to her standards.")
   (naomi "Oh, it's not even 1:00 PM")
   (menu "Go back to bed?"
-            `(("Yes" ,(lambda* (#:optional (input #f)) (naomi "Hum, maybe not")))
-              ("No" ,(lambda* (#:optional (input #f)) (naomi "Let's get moving")))))
+            (("Yes" (naomi "Hum, maybe not"))
+             ("No"  (naomi "Let's get moving"))))
   )
 
 
