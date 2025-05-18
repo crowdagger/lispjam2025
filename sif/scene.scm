@@ -4,6 +4,7 @@
   #:use-module (sif ui-shared)
   #:use-module (sif state)
   #:export (menu
+            jump
             lambdaify
             define-scene))
 
@@ -75,3 +76,6 @@
      (%outer name () (exp ... 'end)))))
 
 
+(define (jump scene)
+  "Indicate to jump to given scene"
+  `(jump ,scene))
