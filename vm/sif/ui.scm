@@ -25,13 +25,20 @@
 ;; Wait for user input
 (define (post-message)
   (display "...")
-  (newline)
-  (readline))
+  (newline))
 
 (define* (raw-menu msg options #:optional (input #f))
   "Display a prompt for options if no input is given, else choose according to input"
+;  (format #t "raw-menu called with input ~s\n" input)
+
   (if input
-      (display "TODO")
+      (let ([input (string->number input)])
+        (if (and input
+                 (>= input 0)
+                 (< input (length options)))
+            (let ([choice (list-ref options input)])
+              ((cadr choice)))
+            (raw-menu msg options)))
       (begin
         (display msg)
         (newline)
@@ -48,7 +55,13 @@
                   (cdr options))))))))
 
 
-(define test-opt '(("Go left" (lambda () (display "Going left")))
-                   ("Go right" (lambda () (display "Going right")))))
+;; (define test-opt (list (list "Go left" (lambda () (display "Going left")))
+;;                        (list "Go right" (lambda () (display "Going right")))))
 
-(raw-menu "Choice" test-opt)
+;; (raw-menu "Choice" test-opt)
+
+
+;; (raw-menu "Choice" test-opt "0")
+;; (raw-menu "Choice" test-opt "1")
+;; (raw-menu "Choice" test-opt "foo")
+

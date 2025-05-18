@@ -11,6 +11,4 @@
   (set! *state* (init-state scene)))
 
 (define* (sif-main #:optional (input #f))
-  (display *state*)
-  (newline)
   (scene-handler! *state* input))

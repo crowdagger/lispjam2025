@@ -1,7 +1,9 @@
 (define-module (sif scene)
   #:use-module (ice-9 match)
+  #:use-module (sif ui)
   #:use-module (sif state)
-  #:export (define-scene
+  #:export (menu
+            define-scene
             call-scene
             scene-handler!))
 
@@ -28,8 +30,12 @@
 ;;                       ((equal input 1) (display "Oh :("))
 ;;    (else (invalid-input))))))
 
+(define-syntax menu (syntax-rules ()))
+
 (define-syntax helper
   (syntax-rules ()
+    ((_ (menu msg opt)) (lambda* (#:optional (input #f))
+                          (raw-menu msg opt input)))
     ((_ exp) (lambda* (#:optional (input #f)) exp))))
 
 (define-syntax %outer
@@ -69,7 +75,9 @@ This function modifies the state"
     (match ret
       ['continue
        (state-set-index! state (+ 1 index))
-       state]
+       ret]
+      ['repeat
+       ret]
       ['end
        ;; Todo
        #f])))
