@@ -1,6 +1,7 @@
 (define-module (sif ui)
   #:use-module (sif character-data)
   #:use-module (ice-9 readline)
+  #:use-module (term ansi-color)
   #:export (message
             clear-screen
             raw-message
@@ -16,21 +17,17 @@
   ;; TODO: wrap lines, ANSI color, stuff
   (raw-message (format #f "~a~a"
                        (if who
-                           (format #f "~a: "
-                                   (character-name who))
+                           (colorize-string
+                            (format #f "~a: "
+                                    (character-name who))
+                            'RED 'BOLD)
                            "")
                        msg))
-  (post-message)
   'continue)
 
-;; Wait for user input
-(define (post-message)
-;  (display "...")
-  (newline))
-
 (define (clear-screen)
-  (display "TODO"))
-
+  (display "\x1b[2J")
+  (display "\x1b[H"))
 
 (define (user-choices choices)
   (let lp ([counter 0]

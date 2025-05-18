@@ -41,7 +41,7 @@
   (clear-screen)
   (lizzie "Thanks for playing!")
   (lizzie "I offer my apologies for the lack of actual game content")
-  (lizzie "However, I still wanted to submit something to partcipate")
+  (lizzie "However, I still wanted to submit something to participate")
   (lizzie "This was a nice experience, kudos to David Thompson and Technomancy for organizing this jam 💜")
   (clear-screen)
   (message "THE END (for real)"))
