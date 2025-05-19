@@ -1,4 +1,6 @@
 (define-module (sif ui)
+  #:use-module (oop goops)
+  #:use-module (string wrap)
   #:use-module (sif character-data)
   #:use-module (ice-9 readline)
   #:use-module (term ansi-color)
@@ -6,6 +8,8 @@
             clear-screen
             raw-message
             user-choices))
+
+(define wrapper (make <text-wrapper> #:line-width 60 #:break-long-words? #f))
 
 (define (raw-message msg)
   "Display a text message"
@@ -22,7 +26,7 @@
                                     (character-name who))
                             'RED 'BOLD)
                            "")
-                       msg))
+                       (fill-string wrapper msg)))
   'continue)
 
 (define (clear-screen)
