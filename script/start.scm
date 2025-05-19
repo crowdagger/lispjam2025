@@ -132,9 +132,4 @@
 (define-scene end-scene
   (message "THE END")
   (clear-screen)
-  (lizzie "Thanks for playing!")
-  (lizzie "I'm sorry for the lack of actual game/story content")
-  (lizzie "However, I still wanted to submit something to participate")
-  (lizzie "This was a nice experience, kudos to David Thompson and Technomancy for organizing this jam 💜")
-  (clear-screen)
-  (message "THE END (for real)"))
+  (message "Thanks for playing!"))
