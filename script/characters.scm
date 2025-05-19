@@ -1,7 +1,15 @@
 (define-module (script characters)
   #:use-module (sif character)
-  #:export (naomi
+  #:export (cherry
+            computer
+            dog
+            julianne42
+            julianne31
             lizzie))
 
-(define naomi (make-character "Naomi" "#ad03fc"))
+(define julianne42 (make-character "Julianne42" "#ff4ff3"))
+(define julianne31 (make-character "Julianne31" "#ff4fa7"))
+(define computer (make-character "Computer" "#4ffffc"))
+(define cherry (make-character "Cherry" "#ad03fc"))
+(define dog (make-character "Dog" "#ffb04f"))
 (define lizzie (make-character "Lizzie" "#fc0303"))
